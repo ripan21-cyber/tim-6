@@ -2,7 +2,7 @@
 #include <string.h>
 #include "peminjaman.h"
 
-void updateStok(char alatDipinjam[], int jumlahPinjam) {
+void kurangistok(char alatDipinjam[], int jumlahPinjam) {
     FILE *fp, *temp;
     char nama[100];
     int stok;
@@ -57,7 +57,6 @@ void pinjamAlat() {
     printf("Jumlah : ");
     scanf("%d", &jumlah);
 
-    // simpan ke file pinjam.txt
     fp = fopen("pinjam.txt", "a");
     if (fp == NULL) {
         printf("Gagal membuka file pinjam.txt!\n");
@@ -67,7 +66,7 @@ void pinjamAlat() {
     fprintf(fp, "%s|%s|%d\n", nama, alat, jumlah);
     fclose(fp);
 
-    // update stok
+    // stok di update
     updateStok(alat, jumlah);
 
     printf("Peminjaman berhasil!\n");
