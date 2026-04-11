@@ -1,1 +1,3 @@
-
+Laptop|10
+kabel|5
+proyektor|3
