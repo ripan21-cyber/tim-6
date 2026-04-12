@@ -1,0 +1,23 @@
+void tambahAlat() {
+    FILE *file = fopen("data/alat.txt", "a");
+    Alat a;
+
+    printf("ID: ");
+    scanf("%u", &a.id);
+    printf("Nama: ");
+    scanf(" %[^\n]", a.nama);
+    printf("Merek: ");
+    scanf(" %[^\n]", a.merek);
+    printf("Model: ");
+    scanf(" %[^\n]", a.model);
+    printf("Tahun: ");
+    scanf("%u", &a.tahun);
+    printf("Jumlah: ");
+    scanf("%u", &a.jumlah);
+
+    fprintf(file, "%u|%s|%s|%s|%u|%u\n",
+            a.id, a.nama, a.merek, a.model, a.tahun, a.jumlah);
+
+    fclose(file);
+    printf("Data berhasil ditambahkan!\n");
+}
