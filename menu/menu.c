@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include "header/menu.h"
-#include "header/alat.h"
-#include "header/pinjam.h"
-#include "header/return.h"
+#include "../header/menu.h"
+#include "../header/alat.h"
+#include "../header/pinjam.h"
 
 // ================= MENU ADMIN =================
 void menuAdmin() {
@@ -20,7 +19,7 @@ void menuAdmin() {
 
         switch (pilih) {
             case 1:
-                lihatAlat();
+                tampilAlat();
                 break;
             case 2:
                 tambahAlat();
@@ -52,10 +51,12 @@ void menuUser(char username[]) {
 
         switch (pilih) {
             case 1:
-                pinjamAlat(username);
+                //pinjamAlat(username);
+                printf("fitur pinjam belum tersedia!\n");
                 break;
             case 2:
-                returnAlat(username);
+                //returnAlat(username);
+                printf("fitur return belum tersedia!\n");
                 break;
             case 3:
                 printf("Keluar...\n");
