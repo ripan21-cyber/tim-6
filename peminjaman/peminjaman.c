@@ -1,74 +1,43 @@
 #include <stdio.h>
 #include <string.h>
-#include "peminjaman.h"
 
-void updateStok(char alatDipinjam[], int jumlahPinjam) {
-    FILE *fp, *temp;
-    char nama[100];
-    int stok;
-    int ditemukan = 0;
+void pinjamAlat(char username[]) {
+    FILE *alat = fopen("alat.txt", "r");
+    FILE *temp = fopen("temp.txt", "w");
+    FILE *pinjam = fopen("pinjam.txt", "a");
 
-    fp = fopen("alat.txt", "r");
-    temp = fopen("temp.txt", "w");
+    char nama[50];
+    int stok, jumlah, found = 0;
+    char pilih[50];
 
-    if (fp == NULL || temp == NULL) {
-        printf("File alat tidak ditemukan!\n");
-        return;
-    }
+    printf("Masukkan nama alat: ");
+    scanf("%s", pilih);
 
-    while (fscanf(fp, "%[^|]|%d\n", nama, &stok) != EOF) {
-        if (strcmp(nama, alatDipinjam) == 0) {
-            ditemukan = 1;
+    printf("Jumlah pinjam: ");
+    scanf("%d", &jumlah);
 
-            if (stok >= jumlahPinjam) {
-                stok -= jumlahPinjam;
+    while (fscanf(alat, "%s %d", nama, &stok) != EOF) {
+        if (strcmp(nama, pilih) == 0) {
+            found = 1;
+            if (stok >= jumlah) {
+                stok -= jumlah;
+                fprintf(pinjam, "%s %s %d\n", username, nama, jumlah);
+                printf("Peminjaman berhasil!\n");
             } else {
-                printf("Stok tidak cukup untuk %s!\n", nama);
+                printf("Stok tidak cukup!\n");
             }
         }
-        fprintf(temp, "%s|%d\n", nama, stok);
+        fprintf(temp, "%s %d\n", nama, stok);
     }
 
-    fclose(fp);
+    if (!found) {
+        printf("Alat tidak ditemukan!\n");
+    }
+
+    fclose(alat);
     fclose(temp);
+    fclose(pinjam);
 
     remove("alat.txt");
     rename("temp.txt", "alat.txt");
-
-    if (!ditemukan) {
-        printf("Alat tidak ditemukan!\n");
-    }
-}
-
-void pinjamAlat() {
-    FILE *fp;
-    char nama[100];
-    char alat[100];
-    int jumlah;
-
-    printf("\n=== PEMINJAMAN ALAT ===\n");
-
-    printf("Nama Peminjam : ");
-    scanf(" %[^\n]", nama);
-
-    printf("Nama Alat : ");
-    scanf(" %[^\n]", alat);
-
-    printf("Jumlah : ");
-    scanf("%d", &jumlah);
-
-    // simpan ke file pinjam.txt
-    fp = fopen("pinjam.txt", "a");
-    if (fp == NULL) {
-        printf("Gagal membuka file pinjam.txt!\n");
-        return;
-    }
-
-    fprintf(fp, "%s|%s|%d\n", nama, alat, jumlah);
-    fclose(fp);
-
-    // update stok
-    updateStok(alat, jumlah);
-
-    printf("Peminjaman berhasil!\n");
 }

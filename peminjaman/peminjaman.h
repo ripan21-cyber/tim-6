@@ -2,6 +2,6 @@
 #define PEMINJAMAN_H
 
 void pinjamAlat();
-void updateStok(char alatDipinjam[], int jumlahPinjam);
+void kurangistok(char alatDipinjam[], int jumlahPinjam);
 
 #endif

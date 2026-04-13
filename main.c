@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "header/login.h"
+#include "header/menu.h"
 
 // stub function (biar nyambung)
 void menuAdmin() {
