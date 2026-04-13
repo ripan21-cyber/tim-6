@@ -3,113 +3,49 @@
 
 #define MAX 100
 
-// Struktur data
-typedef struct {
+// Struct (kalau belum ada .h, ditulis di sini dulu)
+struct Peminjaman {
     char nama[50];
-    int dipinjam; // 1 = dipinjam, 0 = tersedia
-} Buku;
+    char namaAlat[50];
+};
 
-Buku daftarBuku[MAX];
-int jumlahBuku = 0;
+// Data dari file lain (misalnya main.c)
+extern struct Peminjaman data[MAX];
+extern int jumlah;
 
-// Tambah data (contoh awal)
-void tambahBuku(char nama[]) {
-    strcpy(daftarBuku[jumlahBuku].nama, nama);
-    daftarBuku[jumlahBuku].dipinjam = 1;
-    jumlahBuku++;
-}
-
-// Tampilkan buku yang dipinjam
-void tampilkanPinjaman() {
-    printf("\n=== Daftar Buku Dipinjam ===\n");
-    for (int i = 0; i < jumlahBuku; i++) {
-        if (daftarBuku[i].dipinjam == 1) {
-            printf("%d. %s\n", i + 1, daftarBuku[i].nama);
-        }
+// Fungsi tampilkan (biar bisa dipakai di sini juga)
+void tampilkan() {
+    printf("\n=== Daftar Peminjaman Alat ===\n");
+    for (int i = 0; i < jumlah; i++) {
+        printf("%d. %s - %s\n", i + 1, data[i].nama, data[i].namaAlat);
     }
 }
 
-// Fitur pengembalian
-void kembalikanBuku() 
-{
-    int pilihan;
-    tampilkanPinjaman();
+// Fungsi pengembalian
+void pengembalian() {
+    int index;
 
-    printf("\nPilih nomor buku yang ingin dikembalikan: ");
-    scanf("%d", &pilihan);
-    if (pilihan < 1 || pilihan > jumlahBuku) {
+    if (jumlah == 0) {
+        printf("Tidak ada alat yang dipinjam.\n");
+        return;
+    }
+
+    tampilkan();
+
+    printf("\nPilih nomor alat yang dikembalikan: ");
+    scanf("%d", &index);
+
+    if (index < 1 || index > jumlah) {
         printf("Pilihan tidak valid!\n");
         return;
     }
 
-    if (daftarBuku[pilihan - 1].dipinjam == 0) {
-        printf("Buku sudah dikembalikan.\n");
-    } else {
-        daftarBuku[pilihan - 1].dipinjam = 0;
-        printf("Buku '%s' berhasil dikembalikan!\n",
-               daftarBuku[pilihan - 1].nama);
-    }
-}
-
-// Hapus dari list
-void hapusPinjaman() {
-    int pilihan;
-    tampilkanPinjaman();
-
-    printf("\nPilih nomor yang ingin dihapus: ");
-    scanf("%d", &pilihan);
-
-    if (pilihan < 1 || pilihan > jumlahBuku) {
-        printf("Pilihan tidak valid!\n");
-        return;
+    // Hapus data (geser array)
+    for (int i = index - 1; i < jumlah - 1; i++) {
+        data[i] = data[i + 1];
     }
 
-    for (int i = pilihan - 1; i < jumlahBuku - 1; i++) {
-        daftarBuku[i] = daftarBuku[i + 1];
-    }
+    jumlah--;
 
-    jumlahBuku--;
-    printf("Data berhasil dihapus.\n");
-}
-
-// Menu CLI
-void menu() {
-    int pilih;
-
-    do {
-        printf("\n===== MENU PENGEMBALIAN =====\n");
-        printf("1. Tampilkan Buku Dipinjam\n");
-        printf("2. Kembalikan Buku\n");
-        printf("3. Hapus Data Pinjaman\n");
-        printf("4. Keluar\n");
-        printf("Pilih: ");
-        scanf("%d", &pilih);
-
-        switch (pilih) {
-            case 1:
-                tampilkanPinjaman();
-                break;
-            case 2:
-                kembalikanBuku();
-                break;
-            case 3:
-                hapusPinjaman();
-                break;
-            case 4:
-                printf("Keluar...\n");
-                break;
-            default:
-                printf("Pilihan salah!\n");
-        }
-    } while (pilih != 4);
-}
-
-int main() {
-    // Data awal (contoh)
-    tambahBuku("Algoritma");
-    tambahBuku("Struktur Data");
-    tambahBuku("Basis Data");
-
-    menu();
-    return 0;
+    printf("Alat berhasil dikembalikan!\n");
 }
