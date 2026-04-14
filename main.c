@@ -1,33 +1,23 @@
-#include <stdio.h>
-#include <string.h>
-#include "header/login.h"
-#include "header/menu.h"
+#include "header/alat.h"
 
-// stub function (biar nyambung)
 void menuAdmin() {
-    printf("Menu Admin (belum lengkap)\n");
-}
+    int pilihan;
 
-void menuUser() {
-    printf("Menu User (belum lengkap)\n");
-}
+    do {
+        printf("\n=== MENU ADMIN ===");
+        printf("\n1. Tambah Alat");
+        printf("\n2. Tampilkan Alat");
+        printf("\n3. Edit Alat");
+        printf("\n4. Hapus Alat");
+        printf("\n0. Logout");
+        printf("\nPilih: ");
+        scanf("%d", &pilihan);
 
-int main(int argc, char *argv[]) {
-    char role[10];
-
-    if (!login(argc, argv, role)) {
-        return 0;
-    }
-
-    printf("Login berhasil sebagai: %s\n", role);
-
-    if (strcmp(role, "admin") == 0) {
-        menuAdmin();
-    } else if (strcmp(role, "user") == 0) {
-        menuUser();
-    } else {
-        printf("Role tidak dikenali!\n");
-    }
-
-    return 0;
+        switch(pilihan) {
+            case 1: tambahAlat(); break;
+            case 2: tampilAlat(); break;
+            case 3: editAlat(); break;
+            case 4: hapusAlat(); break;
+        }
+    } while(pilihan != 0);
 }
