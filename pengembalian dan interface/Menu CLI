@@ -1,0 +1,33 @@
+int main() 
+    menu();
+    void menu() {
+    int pilihan;
+
+    do {
+        printf("\n===== MENU PERPUSTAKAAN =====\n");
+        printf("1. Tampilkan Buku Dipinjam\n");
+        printf("2. Kembalikan Buku\n");
+        printf("3. Hapus Data Pinjaman\n");
+        printf("4. Keluar\n");
+        printf("Pilih menu: ");
+        scanf("%d", &pilihan);
+
+        switch (pilihan) {
+            case 1:
+                tampilkanPinjaman();
+                break;
+            case 2:
+                kembalikanBuku();
+                break;
+            case 3:
+                hapusPinjaman();
+                break;
+            case 4:
+                printf("Terima kasih!\n");
+                break;
+            default:
+                printf("Pilihan tidak tersedia!\n");
+        }
+
+    } while (pilihan != 4);
+}
