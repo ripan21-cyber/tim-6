@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include "alat.h"
+#include "../header/alat.h"
+#include "../header/menu.h"
 
 typedef struct {
     unsigned int id;
@@ -14,6 +14,12 @@ typedef struct {
 
 void tambahAlat() {
     FILE *file = fopen("data/alat.txt", "a");
+
+    if (file == NULL) {
+        printf("file tidak bisa dibuka!\n");
+        return;
+    }
+
     Alat a;
 
     printf("ID: ");
@@ -38,7 +44,19 @@ void tambahAlat() {
 
 void editAlat() {
     FILE *file = fopen("data/alat.txt", "r");
+
+    if (file == NULL) {
+        printf("file tidak ditemukan!\n");
+        return;
+    }
+
     FILE *temp = fopen("data/temp.txt", "w");
+
+    if (temp == NULL) {
+        printf("file sementara tidak bisa dibuat!\n");
+        fclose(file);
+        return;
+    }
 
     Alat a;
     unsigned int idCari;
@@ -83,7 +101,19 @@ void editAlat() {
 
 void hapusAlat() {
     FILE *file = fopen("data/alat.txt", "r");
+
+     if (file == NULL) {
+        printf("file tidak ditemukan!\n");
+        return;
+    }
+
     FILE *temp = fopen("data/temp.txt", "w");
+
+    if (temp == NULL) {
+        printf("file semenntara tidak bisa dibuat!\n");
+        fclose(file);
+        return;
+    }
 
     Alat a;
     unsigned int idHapus;
@@ -117,6 +147,12 @@ void hapusAlat() {
 
 void tampilAlat() {
     FILE *file = fopen("data/alat.txt", "r");
+
+    if (file == NULL) {
+        printf("file tidak bisa dibuka!\n");
+        return;
+    }
+
     Alat a;
 
     while (fscanf(file, "%u|%[^|]|%[^|]|%[^|]|%u|%u\n",
