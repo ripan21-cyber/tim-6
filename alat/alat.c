@@ -168,3 +168,80 @@ void tampilAlat() {
 
     fclose(file);
 }
+
+#include <stdio.h>
+#include <string.h>
+
+void pinjamAlat(char *username) {
+    FILE *file = fopen("data/peminjaman.txt", "a");
+    if (file == NULL) {
+        printf("Gagal membuka file!\n");
+        return;
+    }
+
+    char nama[50];
+    int jumlah;
+
+    printf("=== PINJAM ALAT ===\n");
+    printf("Masukkan nama alat: ");
+    scanf("%s", nama);
+
+    printf("Jumlah: ");
+    scanf("%d", &jumlah);
+
+    fprintf(file, "%s %s %d dipinjam\n", username, nama, jumlah);
+    fclose(file);
+
+    printf("Berhasil meminjam %d %s\n", jumlah, nama);
+}
+void lihatPeminjaman(char *username) {
+    FILE *file = fopen("data/peminjaman.txt", "r");
+    if (file == NULL) {
+        printf("Belum ada data peminjaman.\n");
+        return;
+    }
+
+    char user[50], alat[50], status[20];
+    int jumlah;
+
+    printf("=== DATA PEMINJAMAN ===\n");
+
+    while (fscanf(file, "%s %s %d %s", user, alat, &jumlah, status) != EOF) {
+        if (strcmp(user, username) == 0) {
+            printf("Alat: %s | Jumlah: %d | Status: %s\n", alat, jumlah, status);
+        }
+    }
+
+    fclose(file);
+}
+void returnAlat(char *username) {
+    FILE *file = fopen("data/peminjaman.txt", "r");
+    FILE *temp = fopen("data/temp.txt", "w");
+
+    if (file == NULL || temp == NULL) {
+        printf("File error!\n");
+        return;
+    }
+
+    char user[50], alat[50], status[20];
+    char nama[50];
+    int jumlah;
+
+    printf("Masukkan nama alat yang ingin dikembalikan: ");
+    scanf("%s", nama);
+
+    while (fscanf(file, "%s %s %d %s", user, alat, &jumlah, status) != EOF) {
+        if (strcmp(user, username) == 0 && strcmp(alat, nama) == 0 && strcmp(status, "dipinjam") == 0) {
+            fprintf(temp, "%s %s %d kembali\n", user, alat, jumlah);
+            printf("Alat berhasil dikembalikan!\n");
+        } else {
+            fprintf(temp, "%s %s %d %s\n", user, alat, jumlah, status);
+        }
+    }
+
+    fclose(file);
+    fclose(temp);
+
+    remove("data/peminjaman.txt");
+    rename("data/temp.txt", "data/peminjaman.txt");
+}

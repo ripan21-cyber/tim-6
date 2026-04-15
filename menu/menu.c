@@ -3,6 +3,8 @@
 #include "../header/menu.h"
 #include "../header/alat.h"
 #include "../header/pinjam.h"
+#include "../header/alat.h"  // pastikan ini ada
+
 
 // ================= MENU ADMIN =================
 void menuAdmin() {
@@ -45,25 +47,31 @@ void menuUser(char username[]) {
         printf("\n===== MENU USER =====\n");
         printf("1. Pinjam Alat\n");
         printf("2. Return Alat\n");
-        printf("3. Keluar\n");
+        printf("3. Lihat Peminjaman\n");
+        printf("4. Keluar\n");
         printf("Pilih: ");
         scanf("%d", &pilih);
 
         switch (pilih) {
             case 1:
-                //pinjamAlat(username);
-                printf("fitur pinjam belum tersedia!\n");
+                pinjamAlat(username);   // 🔥 kirim username
                 break;
+
             case 2:
-                //returnAlat(username);
-                printf("fitur return belum tersedia!\n");
+                returnAlat(username);   // 🔥 aktifkan return
                 break;
+
             case 3:
+                lihatPeminjaman(username); // 🔥 lihat data
+                break;
+
+            case 4:
                 printf("Keluar...\n");
                 break;
+
             default:
                 printf("Pilihan tidak valid!\n");
         }
 
-    } while (pilih != 3);
+    } while (pilih != 4);
 }
