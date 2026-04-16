@@ -1,51 +1,41 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX 100
-
-// Struct (kalau belum ada .h, ditulis di sini dulu)
-struct Peminjaman {
-    char nama[50];
-    char namaAlat[50];
-};
-
-// Data dari file lain (misalnya main.c)
-extern struct Peminjaman data[MAX];
-extern int jumlah;
-
-// Fungsi tampilkan (biar bisa dipakai di sini juga)
-void tampilkan() {
-    printf("\n=== Daftar Peminjaman Alat ===\n");
-    for (int i = 0; i < jumlah; i++) {
-        printf("%d. %s - %s\n", i + 1, data[i].nama, data[i].namaAlat);
-    }
-}
-
-// Fungsi pengembalian
 void pengembalian() {
-    int index;
+    FILE *fp, *temp;
+    char nama[100], alat[100];
+    int jumlah;
+    char cari[100];
+    int found = 0;
 
-    if (jumlah == 0) {
-        printf("Tidak ada alat yang dipinjam.\n");
+    fp = fopen("pinjam.txt", "r");
+    temp = fopen("temp.txt", "w");
+
+    if (fp == NULL) {
+        printf("Tidak ada data peminjaman.\n");
         return;
     }
 
-    tampilkan();
+    printf("Masukkan nama alat yang dikembalikan: ");
+    scanf(" %[^\n]", cari);
 
-    printf("\nPilih nomor alat yang dikembalikan: ");
-    scanf("%d", &index);
+    while (fscanf(fp, "%[^|]|%[^|]|%d\n", nama, alat, &jumlah) != EOF) {
+        if (strcmp(alat, cari) == 0 && found == 0) {
+            found = 1;
+            printf("Alat berhasil dikembalikan!\n");
+            continue;
+        }
 
-    if (index < 1 || index > jumlah) {
-        printf("Pilihan tidak valid!\n");
-        return;
+        fprintf(temp, "%s|%s|%d\n", nama, alat, jumlah);
     }
 
-    // Hapus data (geser array)
-    for (int i = index - 1; i < jumlah - 1; i++) {
-        data[i] = data[i + 1];
+    fclose(fp);
+    fclose(temp);
+
+    remove("pinjam.txt");
+    rename("temp.txt", "pinjam.txt");
+
+    if (!found) {
+        printf("Data tidak ditemukan.\n");
     }
-
-    jumlah--;
-
-    printf("Alat berhasil dikembalikan!\n");
 }
