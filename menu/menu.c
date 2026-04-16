@@ -3,7 +3,7 @@
 #include "../header/menu.h"
 #include "../header/alat.h"
 #include "../header/pinjam.h"
-#include "../header/alat.h"  // pastikan ini ada
+#include "../header/alat.h"  
 
 
 // ================= MENU ADMIN =================
