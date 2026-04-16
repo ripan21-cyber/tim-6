@@ -168,3 +168,38 @@ void tampilAlat() {
 
     fclose(file);
 }
+void menuAdmin() {
+    int pilihan;
+
+    do {
+        printf("\n=== MENU ADMIN ===\n");
+        printf("1. Tambah Alat\n");
+        printf("2. Edit Alat\n");
+        printf("3. Hapus Alat\n");
+        printf("4. Tampil Alat\n");
+        printf("0. Keluar\n");
+        printf("Pilih: ");
+        scanf("%d", &pilihan);
+
+        switch (pilihan) {
+            case 1:
+                tambahAlat();
+                break;
+            case 2:
+                editAlat();
+                break;
+            case 3:
+                hapusAlat();
+                break;
+            case 4:
+                tampilAlat();
+                break;
+            case 0:
+                printf("Keluar dari menu admin...\n");
+                break;
+            default:
+                printf("Pilihan tidak valid!\n");
+        }
+
+    } while (pilihan != 0);
+}
