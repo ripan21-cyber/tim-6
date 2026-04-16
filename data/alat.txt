@@ -1,3 +1,1 @@
-3240800695|rifan 123|laptop|asus|2022|10
-3240800695|faiza|macbook|M1|2020|2
-1|pojan|rizka|basreng|2045|100
+1|pc|ryzen|intel|2009|5
