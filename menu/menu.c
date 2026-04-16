@@ -54,15 +54,15 @@ void menuUser(char username[]) {
 
         switch (pilih) {
             case 1:
-                pinjamAlat(username);   // 🔥 kirim username
+                pinjamAlat(username);   
                 break;
 
             case 2:
-                returnAlat(username);   // 🔥 aktifkan return
+                returnAlat(username);  
                 break;
 
             case 3:
-                lihatPeminjaman(username); // 🔥 lihat data
+                lihatPeminjaman(username); 
                 break;
 
             case 4:
